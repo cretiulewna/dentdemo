@@ -129,7 +129,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section with Parallax */}
-      <section className="relative h-[600px] overflow-hidden md:h-[700px]">
+      <section className="relative h-[550px] overflow-hidden md:h-[650px]">
         <div
           className="absolute inset-0"
           style={{ transform: `translateY(${offset}px)` }}
@@ -146,12 +146,12 @@ export default function HomePage() {
         
         <div className="relative container mx-auto flex h-full items-center justify-between px-4">
           <div className="max-w-2xl space-y-6 animate-fade-in-up">
-            <Badge variant="secondary" className="mb-2 gap-1">
+            <Badge variant="secondary" className="mb-2 gap-1 w-fit">
               <Star className="h-3 w-3 fill-accent text-accent" />
               {t('hero.rating')}
             </Badge>
             
-            <h1 className="font-serif text-4xl font-bold leading-tight text-balance md:text-6xl">
+            <h1 className="font-serif text-4xl font-bold leading-tight text-balance md:text-6xl -mb-2">
               {language === 'ro' ? 'Aici Frica de Dentist Dispare' : language === 'en' ? 'Where Dental Fear Disappears' : 'Dove la Paura del Dentista Scompare'}
             </h1>
             
@@ -200,19 +200,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section - reduced stagger, no hover lift */}
-      <section className="py-20">
+      {/* Trust Metrics Section */}
+      <section className="py-12 bg-secondary/40">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+          <div className="grid gap-8 md:grid-cols-3 text-center">
+            <div className="flex flex-col items-center justify-center">
+              <div className="mb-2 text-4xl font-bold text-primary">500+</div>
+              <p className="text-muted-foreground">
+                {language === 'ro' ? 'Pacienți cu anxietate vindecați' : language === 'en' ? 'Anxious patients treated' : 'Pazienti ansiosi trattati'}
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center border-l border-r border-border/50">
+              <div className="mb-2 text-4xl font-bold text-primary">15+</div>
+              <p className="text-muted-foreground">
+                {language === 'ro' ? 'Ani de experiență' : language === 'en' ? 'Years of experience' : 'Anni di esperienza'}
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <div className="mb-2 text-4xl font-bold text-primary">98%</div>
+              <p className="text-muted-foreground">
+                {language === 'ro' ? 'Rata de satisfacție' : language === 'en' ? 'Satisfaction rate' : 'Tasso di soddisfazione'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section - reduced stagger, no hover lift */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 font-serif text-3xl font-bold text-balance md:text-4xl">
               {t('services.title')}
             </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
               {t('services.subtitle')}
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {services.map((service, index) => {
               const Icon = service.icon
               return (
@@ -226,7 +252,7 @@ export default function HomePage() {
                       <Badge className="bg-accent text-accent-foreground">{service.badge}</Badge>
                     </div>
                   )}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden">
                     <Image
                       src={service.image || "/placeholder.svg"}
                       alt={service.title}
@@ -236,12 +262,12 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                   </div>
                   
-                  <CardHeader>
-                    <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                      <Icon className="h-6 w-6 text-primary" />
+                  <CardHeader className="pb-2">
+                    <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
-                    <CardTitle className="font-serif text-xl">{service.title}</CardTitle>
-                    <CardDescription className="leading-relaxed">
+                    <CardTitle className="font-serif text-lg">{service.title}</CardTitle>
+                    <CardDescription className="leading-relaxed text-xs">
                       {service.description}
                     </CardDescription>
                   </CardHeader>
@@ -266,20 +292,20 @@ export default function HomePage() {
       </section>
 
       {/* Before/After Gallery Preview */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 font-serif text-3xl font-bold text-balance md:text-4xl">
               {t('nav.gallery')}
             </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
               {language === 'ro' && 'Transformari reale ale pacientilor nostri'}
               {language === 'en' && 'Real transformations from our patients'}
               {language === 'it' && 'Trasformazioni reali dei nostri pazienti'}
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 max-w-5xl mx-auto">
             <BeforeAfterSlider
               beforeImage="/before-after-1.jpg"
               afterImage="/before-after-2.jpg"
@@ -304,30 +330,32 @@ export default function HomePage() {
       </section>
 
       {/* Comfort Features - first-person tone */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-serif text-3xl font-bold text-balance md:text-4xl">
               {language === 'ro' ? 'De Ce Te Vei Simti in Siguranta Aici' : language === 'en' ? 'Why You\'ll Feel Safe Here' : 'Perche Ti Sentirai al Sicuro Qui'}
             </h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2">
             {comfortFeatures.map((feature, index) => {
               const Icon = feature.icon
               return (
                 <div
                   key={feature.title}
-                  className="flex flex-col items-center text-center"
+                  className="flex gap-4"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                    <Icon className="h-8 w-8 text-primary" />
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-accent/10">
+                    <Icon className="h-6 w-6 text-accent" />
                   </div>
-                  <h3 className="mb-2 font-serif text-lg font-semibold">{feature.title}</h3>
-                  <p className="leading-relaxed text-muted-foreground text-pretty text-sm">
-                    {feature.description}
-                  </p>
+                  <div className="flex-1">
+                    <h3 className="mb-1 font-serif text-lg font-semibold">{feature.title}</h3>
+                    <p className="leading-relaxed text-muted-foreground text-pretty text-sm">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
               )
             })}
@@ -336,13 +364,13 @@ export default function HomePage() {
       </section>
 
       {/* Video Testimonials */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 font-serif text-3xl font-bold text-balance md:text-4xl">
               {t('testimonials.title')}
             </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
               {language === 'ro' && 'Asculta povestile pacientilor nostri multumiti'}
               {language === 'en' && 'Hear from our satisfied patients'}
               {language === 'it' && 'Ascolta le storie dei nostri pazienti soddisfatti'}
@@ -354,10 +382,10 @@ export default function HomePage() {
       </section>
 
       {/* FAQ - more anxiety-focused */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-serif text-3xl font-bold text-balance md:text-4xl">
               {t('faq.title')}
             </h2>
           </div>
@@ -378,9 +406,9 @@ export default function HomePage() {
       </section>
 
       {/* Smile Quiz CTA Banner */}
-      <section className="py-16 bg-secondary/30">
+      <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-4 font-serif text-2xl font-bold text-balance md:text-3xl">
+          <h2 className="mb-3 font-serif text-2xl font-bold text-balance md:text-3xl">
             {language === 'ro' ? 'Nu stii ce tratament ti se potriveste?' : language === 'en' ? 'Not sure which treatment is right for you?' : 'Non sai quale trattamento fa per te?'}
           </h2>
           <p className="mx-auto mb-6 max-w-xl text-muted-foreground text-pretty">
@@ -400,7 +428,7 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="relative overflow-hidden py-20">
+      <section className="relative overflow-hidden py-16">
         <div className="absolute inset-0 bg-primary/5" />
         
         <div className="relative container mx-auto px-4 text-center">
