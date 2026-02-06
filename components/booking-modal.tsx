@@ -160,7 +160,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
             />
           </div>
 
-          <Button type="submit" className="w-full transition-transform hover:scale-105">
+          <Button type="submit" className="w-full">
             {t('booking.submit')}
           </Button>
         </form>

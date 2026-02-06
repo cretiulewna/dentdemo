@@ -164,7 +164,7 @@ export default function ServicesPage() {
                       <Button
                         size="lg"
                         onClick={() => setIsBookingOpen(true)}
-                        className="group transition-all duration-300 hover:scale-105"
+                        className="group"
                       >
                         {t('hero.cta')}
                         <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -196,15 +196,15 @@ export default function ServicesPage() {
               return (
                 <Card
                   key={service.id}
-                  className="group overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="group overflow-hidden transition-shadow duration-300 hover:shadow-lg"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className="relative h-48 overflow-hidden">
                     <Image
                       src={service.image || "/placeholder.svg"}
                       alt={service.title}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                   </div>
@@ -241,7 +241,7 @@ export default function ServicesPage() {
               <Button
                 size="lg"
                 onClick={() => setIsBookingOpen(true)}
-                className="group transition-all duration-300 hover:scale-110"
+                className="group"
               >
                 {t('cta.button')}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

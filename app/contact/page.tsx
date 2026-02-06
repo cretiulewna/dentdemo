@@ -21,13 +21,45 @@ export default function ContactPage() {
     email: '',
     phone: '',
     message: '',
+    honeypot: '', // Hidden field for spam prevention
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const validateEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+
+  const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^(\+40|\+39|\+)[0-9\s\-()]{8,}$/
+    return phoneRegex.test(phone.replace(/\s/g, ''))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Honeypot check
+    if (formData.honeypot) {
+      console.log('[v0] Spam attempt detected')
+      return
+    }
+
+    const newErrors: Record<string, string> = {}
+    
+    if (!formData.name.trim()) newErrors.name = 'Nume obligatoriu'
+    if (!validateEmail(formData.email)) newErrors.email = 'Email invalid'
+    if (!validatePhone(formData.phone)) newErrors.phone = 'Telefon invalid (+40 sau +39)'
+    if (!formData.message.trim()) newErrors.message = 'Mesaj obligatoriu'
+    if (formData.message.length < 10) newErrors.message = 'Mesajul trebuie să aibă minim 10 caractere'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
     console.log('[v0] Contact form submitted:', formData)
     alert('Mesajul a fost trimis! (Demo only)')
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    setFormData({ name: '', email: '', phone: '', message: '', honeypot: '' })
+    setErrors({})
   }
 
   const contactInfo = [
@@ -81,8 +113,8 @@ export default function ContactPage() {
               return (
                 <Card
                   key={info.title}
-                  className="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="transition-shadow duration-300 hover:shadow-lg"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <CardHeader>
                     <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
@@ -118,10 +150,15 @@ export default function ContactPage() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value })
+                        setErrors({ ...errors, name: '' })
+                      }}
                       required
                       placeholder="Ion Popescu"
+                      className={errors.name ? 'border-destructive' : ''}
                     />
+                    {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -130,10 +167,15 @@ export default function ContactPage() {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value })
+                        setErrors({ ...errors, email: '' })
+                      }}
                       required
                       placeholder="ion@example.com"
+                      className={errors.email ? 'border-destructive' : ''}
                     />
+                    {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -142,25 +184,54 @@ export default function ContactPage() {
                       id="phone"
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value })
+                        setErrors({ ...errors, phone: '' })
+                      }}
                       required
                       placeholder="+40 721 234 567"
+                      className={errors.phone ? 'border-destructive' : ''}
                     />
+                    {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Mesaj</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="message">Mesaj</Label>
+                      <span className="text-xs text-muted-foreground">
+                        {formData.message.length}/500
+                      </span>
+                    </div>
                     <Textarea
                       id="message"
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) => {
+                        if (e.target.value.length <= 500) {
+                          setFormData({ ...formData, message: e.target.value })
+                          setErrors({ ...errors, message: '' })
+                        }
+                      }}
                       required
                       placeholder="Cum te putem ajuta?"
                       rows={5}
+                      maxLength={500}
+                      className={errors.message ? 'border-destructive' : ''}
                     />
+                    {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
                   </div>
 
-                  <Button type="submit" className="w-full transition-transform hover:scale-105">
+                  {/* Honeypot field - hidden */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formData.honeypot}
+                    onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  <Button type="submit" className="w-full">
                     <Send className="mr-2 h-4 w-4" />
                     Trimite Mesaj
                   </Button>

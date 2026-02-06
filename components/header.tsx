@@ -72,7 +72,7 @@ export function Header() {
             ))}
           </div>
 
-          <Button size="sm" className="ml-4 transition-transform hover:scale-105">
+          <Button size="sm" className="ml-4">
             {t('nav.book')}
           </Button>
         </div>
@@ -124,7 +124,7 @@ export function Header() {
               ))}
             </div>
 
-            <Button className="w-full transition-transform hover:scale-105">
+            <Button className="w-full">
               {t('nav.book')}
             </Button>
           </div>

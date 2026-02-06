@@ -8,7 +8,6 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { StickyBookingButton } from '@/components/sticky-booking-button'
 import { ScrollProgress } from '@/components/scroll-progress'
-import { CursorGlow } from '@/components/cursor-glow'
 import { PageTransition } from '@/components/page-transition'
 
 const playfair = Playfair_Display({ 
@@ -37,12 +36,16 @@ export default function RootLayout({
   return (
     <html lang="ro" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
+        <a href="#main-content" className="skip-to-main">
+          Sari la conținut principal
+        </a>
         <LanguageProvider>
           <ScrollProgress />
-          <CursorGlow />
           <Header />
           <PageTransition>
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-screen" id="main-content">
+              {children}
+            </main>
           </PageTransition>
           <Footer />
           <StickyBookingButton />
