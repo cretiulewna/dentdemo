@@ -151,25 +151,25 @@ export function SmileQuiz() {
             <Sparkles className="w-8 h-8 text-primary" />
           </div>
           <CardTitle className="text-2xl font-serif">
-            {t.quiz.results[language]}
+            {t('quiz.results')}
           </CardTitle>
           <CardDescription>
-            {t.quiz.resultsSubtitle[language]}
+            {t('quiz.resultsSubtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="p-6 bg-primary/5 rounded-lg">
             <h3 className="text-xl font-semibold mb-2">{recommendation[language]}</h3>
             <p className="text-muted-foreground">
-              {t.quiz.recommendation[language]}
+              {t('quiz.recommendation')}
             </p>
           </div>
           <div className="flex gap-3">
             <Button className="flex-1" size="lg">
-              {t.cta.book[language]}
+              {t('cta.book')}
             </Button>
             <Button variant="outline" onClick={resetQuiz}>
-              {t.quiz.restart[language]}
+              {t('quiz.restart')}
             </Button>
           </div>
         </CardContent>
@@ -184,7 +184,7 @@ export function SmileQuiz() {
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <span className="text-sm text-muted-foreground">
-            {t.quiz.question[language]} {currentStep + 1} / {questions.length}
+            {t('quiz.question')} {currentStep + 1} / {questions.length}
           </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
