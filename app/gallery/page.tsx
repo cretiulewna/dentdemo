@@ -48,10 +48,15 @@ export default function GalleryPage() {
     },
   ]
 
+  const getFilterCount = (filterId: string) => {
+    if (filterId === 'all') return cases.length
+    return cases.filter((c) => c.category === filterId).length
+  }
+
   const categories = [
-    { id: 'all', label: 'Toate Cazurile' },
-    { id: 'cosmetic', label: t('services.cosmetic') },
-    { id: 'restorative', label: t('services.restorative') },
+    { id: 'all', label: 'Toate Cazurile', count: cases.length },
+    { id: 'cosmetic', label: t('services.cosmetic'), count: cases.filter((c) => c.category === 'cosmetic').length },
+    { id: 'restorative', label: t('services.restorative'), count: cases.filter((c) => c.category === 'restorative').length },
   ]
 
   const filteredCases =
@@ -89,8 +94,9 @@ export default function GalleryPage() {
           >
             <TabsList className="mx-auto grid w-full max-w-md grid-cols-3">
               {categories.map((category) => (
-                <TabsTrigger key={category.id} value={category.id}>
-                  {category.label}
+                <TabsTrigger key={category.id} value={category.id} className="flex items-center gap-2">
+                  <span>{category.label}</span>
+                  <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">({category.count})</span>
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -179,7 +185,7 @@ export default function GalleryPage() {
             Programează o consultație gratuită și descoperă cum te putem ajuta
           </p>
           
-          <Button size="lg" className="transition-all duration-300 hover:scale-110">
+          <Button size="lg">
             {t('hero.cta')}
           </Button>
         </div>

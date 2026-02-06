@@ -99,15 +99,15 @@ export default function TeamPage() {
             {team.map((member, index) => (
               <Card
                 key={member.name}
-                className="overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="overflow-hidden transition-shadow duration-300 hover:shadow-md"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className="relative aspect-[3/4] overflow-hidden">
+                <div className="relative aspect-[3/4] overflow-hidden group">
                   <Image
                     src={member.image || "/placeholder.svg"}
                     alt={member.name}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-102"
                   />
                 </div>
                 
@@ -148,8 +148,8 @@ export default function TeamPage() {
               return (
                 <div
                   key={value.title}
-                  className="text-center transition-all duration-300 hover:scale-105"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="text-center"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                     <Icon className="h-8 w-8 text-primary" />
