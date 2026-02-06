@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguage } from '@/lib/language-context'
+import { BeforeAfterSlider } from '@/components/before-after-slider'
 
 export default function GalleryPage() {
   const { t } = useLanguage()
@@ -17,28 +18,32 @@ export default function GalleryPage() {
       id: 1,
       title: 'Albire Dentară Premium',
       category: 'cosmetic',
-      image: '/before-after-1.jpg',
+      beforeImage: '/before-after-1.jpg',
+      afterImage: '/service-cosmetic.jpg',
       description: 'Transformare completă prin albire dentară profesională',
     },
     {
       id: 2,
       title: 'Fațete Ceramice',
       category: 'cosmetic',
-      image: '/before-after-2.jpg',
+      beforeImage: '/before-after-2.jpg',
+      afterImage: '/before-after-1.jpg',
       description: 'Corectarea spațiilor între dinți cu fațete premium',
     },
     {
       id: 3,
       title: 'Aliniere Ortodontică',
       category: 'cosmetic',
-      image: '/before-after-3.jpg',
+      beforeImage: '/before-after-3.jpg',
+      afterImage: '/before-after-4.jpg',
       description: 'Dinți perfect aliniați cu tratament Invisalign',
     },
     {
       id: 4,
       title: 'Restaurare cu Coroane',
       category: 'restorative',
-      image: '/before-after-4.jpg',
+      beforeImage: '/before-after-4.jpg',
+      afterImage: '/before-after-2.jpg',
       description: 'Restaurare completă cu coroane ceramice premium',
     },
   ]
@@ -91,41 +96,21 @@ export default function GalleryPage() {
             </TabsList>
           </Tabs>
 
-          {/* Gallery Grid */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {/* Gallery Grid with Interactive Sliders */}
+          <div className="grid gap-8 md:grid-cols-2">
             {filteredCases.map((item, index) => (
-              <Card
+              <div
                 key={item.id}
-                className="group overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                className="animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={item.image || "/placeholder.svg"}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <Badge className="mb-2" variant="secondary">
-                        {item.category === 'cosmetic'
-                          ? t('services.cosmetic')
-                          : t('services.restorative')}
-                      </Badge>
-                      <h3 className="mb-2 font-serif text-xl font-bold text-white">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed text-white/90">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <CardContent className="p-6">
+                <BeforeAfterSlider
+                  beforeImage={item.beforeImage}
+                  afterImage={item.afterImage}
+                  beforeAlt={`${item.title} - Înainte`}
+                  afterAlt={`${item.title} - După`}
+                />
+                <div className="mt-4">
                   <Badge className="mb-2" variant="outline">
                     {item.category === 'cosmetic'
                       ? t('services.cosmetic')
@@ -135,8 +120,8 @@ export default function GalleryPage() {
                   <p className="mt-2 leading-relaxed text-muted-foreground text-pretty">
                     {item.description}
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
 

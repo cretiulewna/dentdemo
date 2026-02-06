@@ -7,12 +7,12 @@ export type Language = 'ro' | 'en' | 'it'
 interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
-  t: (key: string) => string
+  t: any
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-const translations = {
+const translations: any = {
   ro: {
     // Navigation
     'nav.home': 'Acasă',
@@ -96,6 +96,16 @@ const translations = {
     'booking.message': 'Mesaj (opțional)',
     'booking.submit': 'Trimite Programare',
     'booking.select': 'Selectează...',
+    
+    // Quiz
+    'quiz.question': 'Întrebarea',
+    'quiz.results': 'Rezultatele Tale',
+    'quiz.resultsSubtitle': 'Pe baza răspunsurilor tale, îți recomandăm:',
+    'quiz.recommendation': 'Acest tratament este ideal pentru nevoile tale. Programează o consultație gratuită pentru a discuta în detaliu.',
+    'quiz.restart': 'Reîncepe Chestionarul',
+    
+    // CTA
+    'cta.book': 'Programează Consultație',
   },
   en: {
     // Navigation
@@ -180,6 +190,16 @@ const translations = {
     'booking.message': 'Message (optional)',
     'booking.submit': 'Submit Booking',
     'booking.select': 'Select...',
+    
+    // Quiz
+    'quiz.question': 'Question',
+    'quiz.results': 'Your Results',
+    'quiz.resultsSubtitle': 'Based on your answers, we recommend:',
+    'quiz.recommendation': 'This treatment is ideal for your needs. Book a free consultation to discuss in detail.',
+    'quiz.restart': 'Restart Quiz',
+    
+    // CTA
+    'cta.book': 'Book Consultation',
   },
   it: {
     // Navigation
@@ -264,6 +284,16 @@ const translations = {
     'booking.message': 'Messaggio (opzionale)',
     'booking.submit': 'Invia Prenotazione',
     'booking.select': 'Seleziona...',
+    
+    // Quiz
+    'quiz.question': 'Domanda',
+    'quiz.results': 'I Tuoi Risultati',
+    'quiz.resultsSubtitle': 'In base alle tue risposte, ti consigliamo:',
+    'quiz.recommendation': 'Questo trattamento è ideale per le tue esigenze. Prenota una consulenza gratuita per discuterne in dettaglio.',
+    'quiz.restart': 'Riavvia Quiz',
+    
+    // CTA
+    'cta.book': 'Prenota Consulto',
   },
 }
 

@@ -22,9 +22,13 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { useLanguage } from '@/lib/language-context'
 import { BookingModal } from '@/components/booking-modal'
+import { Tooth3D } from '@/components/tooth-3d'
+import { SmileQuiz } from '@/components/smile-quiz'
+import { VideoTestimonials } from '@/components/video-testimonials'
+import { BeforeAfterSlider } from '@/components/before-after-slider'
 
 export default function HomePage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [isBookingOpen, setIsBookingOpen] = useState(false)
 
   const services = [
@@ -134,7 +138,7 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
         
-        <div className="relative container mx-auto flex h-full items-center px-4">
+        <div className="relative container mx-auto flex h-full items-center justify-between px-4">
           <div className="max-w-2xl space-y-6 animate-fade-in-up">
             <Badge variant="secondary" className="mb-2 gap-1">
               <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
@@ -168,6 +172,11 @@ export default function HomePage() {
                 <Link href="/gallery">{t('nav.gallery')}</Link>
               </Button>
             </div>
+          </div>
+          
+          {/* 3D Tooth Icon */}
+          <div className="hidden lg:block animate-fade-in">
+            <Tooth3D />
           </div>
         </div>
       </section>
@@ -232,6 +241,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Before/After Gallery Preview */}
+      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+              {t('nav.gallery')}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+              {language === 'ro' && 'Transformări reale ale pacienților noștri'}
+              {language === 'en' && 'Real transformations from our patients'}
+              {language === 'it' && 'Trasformazioni reali dei nostri pazienti'}
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+            <div className="animate-fade-in-up">
+              <BeforeAfterSlider
+                beforeImage="/before-after-1.jpg"
+                afterImage="/before-after-2.jpg"
+              />
+            </div>
+            <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              <BeforeAfterSlider
+                beforeImage="/before-after-3.jpg"
+                afterImage="/before-after-4.jpg"
+              />
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button variant="outline" size="lg" asChild>
+              <Link href="/gallery">
+                {language === 'ro' && 'Vezi Toate Rezultatele'}
+                {language === 'en' && 'View All Results'}
+                {language === 'it' && 'Vedi Tutti i Risultati'}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Comfort Features */}
       <section className="bg-muted/30 py-20">
         <div className="container mx-auto px-4">
@@ -264,46 +315,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Video Testimonials */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
               {t('testimonials.title')}
             </h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+              {language === 'ro' && 'Ascultă poveștile pacienților noștri mulțumiți'}
+              {language === 'en' && 'Hear from our satisfied patients'}
+              {language === 'it' && 'Ascolta le storie dei nostri pazienti soddisfatti'}
+            </p>
           </div>
 
-          <Carousel className="mx-auto max-w-4xl">
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index}>
-                  <Card className="border-2">
-                    <CardContent className="p-8 text-center">
-                      <div className="mb-4 flex justify-center gap-1">
-                        {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
-                      </div>
-                      
-                      <p className="mb-6 text-lg leading-relaxed text-pretty">
-                        "{testimonial.content}"
-                      </p>
-                      
-                      <div>
-                        <p className="font-semibold">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <VideoTestimonials />
+        </div>
+      </section>
+
+      {/* Smile Assessment Quiz */}
+      <section className="bg-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+              {language === 'ro' && 'Descoperă Soluția Perfectă Pentru Tine'}
+              {language === 'en' && 'Discover Your Perfect Solution'}
+              {language === 'it' && 'Scopri la Soluzione Perfetta per Te'}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+              {language === 'ro' && 'Răspunde la câteva întrebări și află ce tratament ți se potrivește'}
+              {language === 'en' && 'Answer a few questions and find out which treatment suits you'}
+              {language === 'it' && 'Rispondi ad alcune domande e scopri quale trattamento fa per te'}
+            </p>
+          </div>
+
+          <SmileQuiz />
         </div>
       </section>
 

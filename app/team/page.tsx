@@ -5,6 +5,7 @@ import { Award, GraduationCap, Heart, Play } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { useLanguage } from '@/lib/language-context'
+import { ClinicTour } from '@/components/clinic-tour'
 
 export default function TeamPage() {
   const { t } = useLanguage()
@@ -164,55 +165,35 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Clinic Tour Section */}
+      {/* Interactive Clinic Tour Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-            <div className="space-y-6">
-              <Badge variant="secondary">Tur Virtual</Badge>
-              
-              <h2 className="font-serif text-3xl font-bold text-balance">
-                Descoperă Clinica Noastră
-              </h2>
-              
-              <p className="text-lg leading-relaxed text-muted-foreground text-pretty">
-                O clinică modernă, dotată cu echipamente de ultimă generație, într-un ambient calm și reconfortant. Am creat un spațiu care combină profesionalismul medical cu confortul unei experiențe spa.
-              </p>
+          <div className="mb-12 text-center">
+            <Badge variant="secondary" className="mb-4">Tur Virtual Interactiv</Badge>
+            
+            <h2 className="mb-4 font-serif text-3xl font-bold text-balance md:text-4xl">
+              Descoperă Clinica Noastră
+            </h2>
+            
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+              Explorează spațiile noastre moderne și dotările de ultimă generație. Apasă pe punctele marcate pentru a vedea detalii despre fiecare zonă.
+            </p>
+          </div>
 
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span className="leading-relaxed">Zone de așteptare confortabile cu aromatherapie</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span className="leading-relaxed">Cabinete individuale pentru intimitate maximă</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span className="leading-relaxed">Echipamente digitale de ultimă generație</span>
-                </li>
-              </ul>
+          <ClinicTour />
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            <div className="text-center p-6 bg-muted/30 rounded-lg">
+              <h3 className="font-semibold mb-2">Zone de Așteptare</h3>
+              <p className="text-sm text-muted-foreground">Confortabile cu aromatherapie</p>
             </div>
-
-            <div className="relative aspect-video overflow-hidden rounded-xl">
-              <Image
-                src="/clinic-tour.jpg"
-                alt="Clinic Tour"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity hover:bg-black/30">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/90 shadow-xl transition-transform hover:scale-110">
-                  <Play className="ml-1 h-8 w-8 text-primary" />
-                </div>
-              </div>
+            <div className="text-center p-6 bg-muted/30 rounded-lg">
+              <h3 className="font-semibold mb-2">Cabinete Private</h3>
+              <p className="text-sm text-muted-foreground">Intimitate maximă garantată</p>
+            </div>
+            <div className="text-center p-6 bg-muted/30 rounded-lg">
+              <h3 className="font-semibold mb-2">Echipamente Digitale</h3>
+              <p className="text-sm text-muted-foreground">Tehnologie de ultimă generație</p>
             </div>
           </div>
         </div>

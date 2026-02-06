@@ -7,6 +7,9 @@ import { LanguageProvider } from '@/lib/language-context'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { StickyBookingButton } from '@/components/sticky-booking-button'
+import { ScrollProgress } from '@/components/scroll-progress'
+import { CursorGlow } from '@/components/cursor-glow'
+import { PageTransition } from '@/components/page-transition'
 
 const playfair = Playfair_Display({ 
   subsets: ['latin'],
@@ -35,8 +38,12 @@ export default function RootLayout({
     <html lang="ro" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
         <LanguageProvider>
+          <ScrollProgress />
+          <CursorGlow />
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <PageTransition>
+            <main className="min-h-screen">{children}</main>
+          </PageTransition>
           <Footer />
           <StickyBookingButton />
         </LanguageProvider>

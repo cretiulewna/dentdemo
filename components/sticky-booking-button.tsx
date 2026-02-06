@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { BookingModal } from '@/components/booking-modal'
+import { BookingModalV2 } from '@/components/booking-modal-v2'
 import { useLanguage } from '@/lib/language-context'
 
 export function StickyBookingButton() {
@@ -21,7 +21,7 @@ export function StickyBookingButton() {
         {t('nav.book')}
       </Button>
 
-      <BookingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <BookingModalV2 isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   )
 }
