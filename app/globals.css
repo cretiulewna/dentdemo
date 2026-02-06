@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@layer base {
+  :root {
+    /* Sanctuary Color Palette */
+    --background: 42 35% 98%; /* Off-white #FAFAF8 */
+    --foreground: 0 0% 17%; /* Charcoal #2C2C2C */
+    
+    /* Primary: Soft Sage Green */
+    --primary: 168 22% 69%; /* #9FBFB8 */
+    --primary-foreground: 0 0% 17%;
+    
+    /* Secondary: Warm Beige */
+    --secondary: 39 42% 87%; /* #E8DCC8 */
+    --secondary-foreground: 0 0% 17%;
+    
+    /* Accent: Soft Slate Blue */
+    --accent: 200 17% 48%; /* #6B7F8C */
+    --accent-foreground: 42 35% 98%;
+    
+    /* Muted */
+    --muted: 39 25% 92%;
+    --muted-foreground: 0 0% 40%;
+    
+    /* Card */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 17%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 17%;
+    
+    /* Border & Input */
+    --border: 168 22% 85%;
+    --input: 168 22% 85%;
+    --ring: 168 22% 69%;
+    
+    /* Destructive */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+}
