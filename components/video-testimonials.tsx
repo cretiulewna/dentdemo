@@ -45,12 +45,12 @@ export function VideoTestimonials() {
             src={video.thumbnail || "/placeholder.svg"}
             alt={video.name[language]}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover transition-transform duration-300 group-hover:scale-102"
           />
 
           {/* Play Overlay */}
-          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/45 transition-colors flex items-center justify-center">
+            <div className="w-16 h-16 bg-card rounded-full flex items-center justify-center shadow-lg">
               <Play className="w-8 h-8 text-primary ml-1" fill="currentColor" />
             </div>
           </div>

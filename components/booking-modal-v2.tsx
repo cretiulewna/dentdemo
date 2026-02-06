@@ -95,9 +95,31 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
     phone: '',
     message: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const { t, language } = useLanguage()
 
+  const validateEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+
+  const validatePhone = (phone: string): boolean => {
+    // Accept Romanian (+40) and Italian (+39) phone numbers
+    const phoneRegex = /^(\+40|\+39|\+)[0-9\s\-()]{8,}$/
+    return phoneRegex.test(phone.replace(/\s/g, ''))
+  }
+
   const handleSubmit = () => {
+    const newErrors: Record<string, string> = {}
+    
+    if (!formData.name.trim()) newErrors.name = language === 'ro' ? 'Nume obligatoriu' : language === 'en' ? 'Name required' : 'Nome obbligatorio'
+    if (!validateEmail(formData.email)) newErrors.email = language === 'ro' ? 'Email invalid' : language === 'en' ? 'Invalid email' : 'Email non valido'
+    if (!validatePhone(formData.phone)) newErrors.phone = language === 'ro' ? 'Telefon invalid' : language === 'en' ? 'Invalid phone' : 'Telefono non valido'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
     console.log('[v0] Multi-step booking submitted:', formData)
     alert('Programarea a fost trimisă cu succes! (Demo only)')
     onClose()
@@ -129,7 +151,7 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]" aria-label="Booking wizard">
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl">
             {language === 'ro' && 'Programează Consultație'}
@@ -137,20 +159,21 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
             {language === 'it' && 'Prenota Consulto'}
           </DialogTitle>
           <DialogDescription>
-            {language === 'ro' && 'Completează pașii pentru a programa o consultație'}
-            {language === 'en' && 'Complete the steps to book your consultation'}
-            {language === 'it' && 'Completa i passaggi per prenotare la tua consulenza'}
+            {language === 'ro' && `Pasul ${step} din 4: Completează pașii pentru a programa o consultație`}
+            {language === 'en' && `Step ${step} of 4: Complete the steps to book your consultation`}
+            {language === 'it' && `Passo ${step} di 4: Completa i passaggi per prenotare la tua consulenza`}
           </DialogDescription>
         </DialogHeader>
 
         {/* Progress Bar */}
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 mb-6" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={4} aria-label={`Step ${step} of 4`}>
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="flex-1">
+            <div key={i} className="flex-1" aria-current={i === step ? 'step' : undefined}>
               <div
                 className={`h-2 rounded-full transition-all ${
                   i <= step ? 'bg-primary' : 'bg-gray-200'
                 }`}
+                aria-hidden="true"
               />
             </div>
           ))}
@@ -194,9 +217,9 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
         {step === 2 && (
           <div className="space-y-4 animate-fade-in-up">
             <h3 className="font-semibold text-lg">
-              {language === 'ro' && 'Alege Doctorul'}
-              {language === 'en' && 'Choose Doctor'}
-              {language === 'it' && 'Scegli Dottore'}
+              {language === 'ro' && 'Alege Doctorul (Opțional)'}
+              {language === 'en' && 'Choose Doctor (Optional)'}
+              {language === 'it' && 'Scegli Dottore (Opzionale)'}
             </h3>
             <div className="space-y-3">
               {doctors.map((doctor) => (
@@ -218,8 +241,8 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
                       <h4 className="font-semibold">{doctor.name}</h4>
                       <p className="text-sm text-muted-foreground mb-1">{doctor.specialty[language]}</p>
                       <div className="flex items-center gap-2 text-xs">
-                        <div className="flex items-center gap-1 text-green-600">
-                          <div className="w-2 h-2 bg-green-600 rounded-full" />
+                        <div className="flex items-center gap-1 text-success">
+                          <div className="w-2 h-2 bg-success rounded-full" />
                           {getAvailabilityText(doctor.availability)}
                         </div>
                       </div>
@@ -229,12 +252,19 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
                 </button>
               ))}
             </div>
-            <Button variant="outline" onClick={prevStep} className="w-full bg-transparent">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              {language === 'ro' && 'Înapoi'}
-              {language === 'en' && 'Back'}
-              {language === 'it' && 'Indietro'}
-            </Button>
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={prevStep} className="flex-1 bg-transparent">
+                <ChevronLeft className="w-4 h-4 mr-2" />
+                {language === 'ro' && 'Înapoi'}
+                {language === 'en' && 'Back'}
+                {language === 'it' && 'Indietro'}
+              </Button>
+              <Button onClick={nextStep} variant="outline" className="flex-1 bg-transparent">
+                {language === 'ro' && 'Sări'}
+                {language === 'en' && 'Skip'}
+                {language === 'it' && 'Salta'}
+              </Button>
+            </div>
           </div>
         )}
 
@@ -333,10 +363,15 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, name: e.target.value })
+                  setErrors({ ...errors, name: '' })
+                }}
                 required
                 placeholder="Ion Popescu"
+                className={errors.name ? 'border-destructive' : ''}
               />
+              {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
@@ -345,10 +380,15 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value })
+                  setErrors({ ...errors, email: '' })
+                }}
                 required
                 placeholder="ion@example.com"
+                className={errors.email ? 'border-destructive' : ''}
               />
+              {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
             </div>
 
             <div className="space-y-2">
@@ -361,10 +401,15 @@ export function BookingModalV2({ isOpen, onClose }: BookingModalProps) {
                 id="phone"
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, phone: e.target.value })
+                  setErrors({ ...errors, phone: '' })
+                }}
                 required
                 placeholder="+40 721 234 567"
+                className={errors.phone ? 'border-destructive' : ''}
               />
+              {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
             </div>
 
             <div className="space-y-2">

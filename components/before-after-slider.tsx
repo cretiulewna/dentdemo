@@ -43,6 +43,16 @@ export function BeforeAfterSlider({
     handleMove(e.touches[0].clientX)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const step = 5 // Keyboard step percentage
+    const newPosition = sliderPosition + (e.key === 'ArrowRight' ? step : e.key === 'ArrowLeft' ? -step : 0)
+    
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault()
+      setSliderPosition(Math.max(0, Math.min(newPosition, 100)))
+    }
+  }
+
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => handleMouseMove(e)
     const handleGlobalTouchMove = (e: TouchEvent) => handleTouchMove(e)
@@ -66,9 +76,17 @@ export function BeforeAfterSlider({
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-[4/3] overflow-hidden rounded-xl select-none cursor-ew-resize group"
+      className="relative w-full aspect-[4/3] overflow-hidden rounded-xl select-none cursor-ew-resize group focus:outline-accent focus:outline-offset-2"
       onMouseDown={handleMouseDown}
       onTouchStart={handleMouseDown}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="slider"
+      aria-label="Before and after image slider"
+      aria-valuenow={sliderPosition}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuetext={`${sliderPosition.toFixed(0)}% of after image visible`}
     >
       {/* After Image (Full) */}
       <div className="absolute inset-0">
